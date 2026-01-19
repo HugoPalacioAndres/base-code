@@ -79,21 +79,26 @@
                  gap-3 = espacio entre elementos
             -->
             <div class="d-flex align-items-center gap-3">
-                <!-- Mostramos nombre del usuario logueado -->
-                <span class="text-white">
-                    Bienvenido, <strong><?= htmlspecialchars($nombre_usuario, ENT_QUOTES, 'UTF-8') ?></strong>
-                </span>
-                
-                <!-- Boton para logout (cerrar sesion)
-                     btn = clase de Bootstrap para botones
-                     btn-danger = color rojo
-                     btn-sm = boton pequeño
-                     href="logout.php" = enlaza a la pagina logout.php
-                -->
-                <a href="logout.php" class="btn btn-danger btn-sm">
-                    <i class="fas fa-sign-out-alt"></i> Cerrar sesión
-                </a>
-            </div>
+    <span class="text-white">
+        Bienvenido, <strong><?= htmlspecialchars($nombre_usuario, ENT_QUOTES, 'UTF-8') ?></strong>
+    </span>
+
+    <!-- Enlace a perfil -->
+    <a href="profile.php" class="btn btn-outline-light btn-sm">
+        <i class="fas fa-user"></i> Mi perfil
+    </a>
+
+    <!-- Enlace a cambio de contraseña (opcional) -->
+    <a href="change-password.php" class="btn btn-outline-light btn-sm">
+        <i class="fas fa-key"></i>
+    </a>
+
+    <!-- Botón logout -->
+    <a href="logout.php" class="btn btn-danger btn-sm">
+        <i class="fas fa-sign-out-alt"></i> Cerrar sesión
+    </a>
+</div>
+
         </div>
     </nav>
 

@@ -1,7 +1,7 @@
 <?php   
 require_once __DIR__ .'/auth.php';
 require_once __DIR__ .'/base-code/data-access/CalendarDataAccess.php';
-require_once __DIR__ . '/base-code/entitites/User.php';
+require_once __DIR__ . '/base-code/entities/User.php';
 /**Ravision de autenticacion si no redirijo a index.php */
 requerir_autenticacion();
 
@@ -15,7 +15,9 @@ $id_usuario = $_SESSION['id_usuario'];
 /**Recuepero el objeto user desde la bd
  * usando metodo getUserById(int $user_id)
  */
-if($ususario === null){
+$usuario = $acceso_datos -> getUserById($id_usuario);
+
+if($usuario === null){
     /**Al igual que antes caso raro pero posible
      * La sesion dice que hay usario pero no existe en la BD
      * Lo mas seguro es mandar a logout o index
@@ -26,9 +28,9 @@ if($ususario === null){
 /**Extraer los datos que queremos mostrar del objeto USer
  * utilizo los getter de la clase User getEmail, getFirstName..
  */
-$email = $usuario->getEmail();
+$email = $usuario-> getEmail();
 $nombre = $usuario -> getFirstName();
-$apellidos = $usuario -> getLAStName();
+$apellidos = $usuario -> getLastName();
 $fecha_nac = $usuario -> getBirthDate();
 $about = $usuario -> getAbout();
 ?>
@@ -49,6 +51,10 @@ $about = $usuario -> getAbout();
             <span class="navbar-brand mb-0 h1">
                 <i class="fas fa-user"></i> Mi perfil
             </span>
+            <a href="edit-profile.php" class="btn btn-primary">
+                 Editar perfil
+            </a>
+
             <a href="events.php" class="btn btn-outline-light btn-sm">
                 Volver a mis eventos
             </a>

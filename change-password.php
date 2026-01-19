@@ -8,9 +8,9 @@
  * Si todo esta correcto actualizo has en BD con updateUser()
  * Mostrar mensaje de exito o error y redireccion a events.php
  */
-requiere_once __DIR__ . 'auth.php';
-requier_once __DIR__ . '/base-code/data-access/CalendarDataAccess.php';
-requier_once __DIR__ . '/base-code/entities/User.php';
+require_once __DIR__ . '/auth.php';
+require_once __DIR__ . '/base-code/data-access/CalendarDataAccess.php';
+require_once __DIR__ . '/base-code/entities/User.php';
 
 /**Exijo que usuario este autenticado */
 requerir_autenticacion();
@@ -30,29 +30,29 @@ $usuario = $acceso_datos -> getUserById($id_usuario);/**Metodo de CalendarDataAc
  */
 if($usuario === null ){
     redirigir('logout.php');
-    exit
+    exit;
 }
 
 /**Variables para formulario y errores */
-$errores=[]
-$mensaje_exito='';
-$contraseña_actual='';
-$nueva_contraseña='';
-$repetir_nueva_contraseña='';
+$errores=[];
+$mensaje_exito = '';
+$contraseña_actual = '';
+$nueva_contraseña = '';
+$repetir_nueva_contraseña = '';
 
 /**Procesar form si llega por POST */
 if($_SERVER['REQUEST_METHOD']==='POST'){
     /**Recogemos datos del form su no llegan, cadena vacia */
-    $contraseña_actual=$_POST['password_actual'] ?? '';
-    $nueva_contraseña=$_POST['password_nueva'] ?? '';
-    $repetir_nueva_contraseña=$_POST['password_repetida'] ?? '';
+    $contraseña_actual = $_POST['password_actual'] ?? '';
+    $nueva_contraseña = $_POST['password_nueva'] ?? '';
+    $repetir_nueva_contraseña= $_POST['password_repetida'] ?? '';
 
     /**Validaciondes de presencia */
     if($contraseña_actual === ''){
         $errores[]='La contraseña actual es obligatoria.';
     }
     if($nueva_contraseña === ''){
-        errores[]='La nueva contraseña es obligatoria.';
+        $errores[]='La nueva contraseña es obligatoria.';
     }
     if($repetir_nueva_contraseña === ''){
         $errores[]='Debe repetir la nueva contraseña.';
@@ -77,6 +77,10 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
         if(!preg_match('/[0-9]/', $nueva_contraseña)){
             $errores[] = 'Las nuevas contraseñas no coinciden.';
         }
+        if ($nueva_contraseña !== $repetir_nueva_contraseña) {
+            $errores[] = 'Las nuevas contraseñas no coinciden.';
+        }
+
         /**Comprobamos que la nueva contra coincida con la repetida */
         if(empty($errores)){
             /**Calcular hash de la nueva contraseña */
@@ -93,7 +97,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
 
                 $contraseña_actual = $nueva_contraseña = $repetir_nueva_contraseña = '';
             }else {
-                errores[] ='Se ha producido un error al cactualizar la contraseña en la base de datos';
+                $errores[] ='Se ha producido un error al cactualizar la contraseña en la base de datos';
             }
 
         }
